@@ -4,8 +4,11 @@ import com.bssm.leejunyoung.hellospring.domain.Student;
 import com.bssm.leejunyoung.hellospring.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -25,5 +28,12 @@ public class StudentController {
         //service를 부른다. student를 같이 넘김
         service.edit(student);
         return "redirect:/";
+    }
+
+    @GetMapping("students")
+    public String studentList(Model model) {
+        List<Student> studentList = service.findStudents();
+        model.addAttribute("students", studentList);
+        return "students/studentList";
     }
 }
